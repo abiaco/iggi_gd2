@@ -32,6 +32,9 @@ public class SimpleBattle {
 
     boolean visible = true;
 
+    static int nAsteroids = 10;
+    static int nPickups = 5;
+
     ArrayList<BattleController> controllers;
 
     public ArrayList<GameObject> objects;
@@ -99,8 +102,16 @@ public class SimpleBattle {
         s2 = buildShip(500, 250, 1);
         this.currentTick = 0;
 
-        objects.add(new Asteroid(new Vector2d(10,10), new Vector2d(0,1),2));
-        objects.add(new Pickup(this, new Vector2d(100, 100)));
+        for (int i=0 ; i<nAsteroids ; i++) {
+            objects.add(new Asteroid(new Vector2d(width * rand.nextDouble(), height * rand.nextDouble()),
+                                     new Vector2d(2 * rand.nextDouble() - 1, 2 * rand.nextDouble() - 1),
+                                     2));
+        }
+
+        for (int i=0 ; i<nPickups ; i++) {
+            objects.add(new Pickup(this,
+                                   new Vector2d(width * rand.nextDouble(), height * rand.nextDouble())));
+        }
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
