@@ -141,6 +141,7 @@ public class SimpleBattle {
 
         checkCollision(s1);
         checkCollision(s2);
+        checkMissileCollisions();
 
         // and fire any missiles as necessary
         if (a1.shoot) fireMissile(s1.s, s1.d, 0);
@@ -203,38 +204,49 @@ public class SimpleBattle {
         // check with all other game objects
         // but use a hack to only consider interesting interactions
         // e.g. asteroids do not collide with themselves
-        if (!actor.dead() &&
-                (actor instanceof BattleMissile
-                        || actor instanceof NeuroShip)) {
-            if (actor instanceof BattleMissile) {
-                // System.out.println("Missile: " + actor);
+        if (!actor.dead()) {
+            if (actor instanceof NeuroShip) {
+                for (GameObject target : objects) {
+                    if (overlap(actor, target)) {
+                        if(target instanceof Missile) {
+                            int playerID = (actor == s1 ? 1 : 0);
+                            PlayerStats stats = this.stats.get(playerID);
+                            stats.nPoints += pointsPerKill;
+                        } else if(target instanceof Asteroid) {
+                            int playerID = (actor == s1 ? 0 : 1);
+                            PlayerStats stats = this.stats.get(playerID);
+                            stats.nPoints -= pointsPerKill;
+                        } else if (target instanceof Pickup) {
+                            int playerID = (actor == s1 ? 0 : 1);
+                            PlayerStats stats = this.stats.get(playerID);
+                            stats.nPoints += ((Pickup)target).containedScore;
+                        }
+                        target.hit(this);
+                        return;
+                    }
+                }
+            } else if (actor instanceof Missile) {
+                for (GameObject target : objects) {
+                    if (overlap(actor, target)) {
+                        if (target instanceof Asteroid) {
+                            target.hit(this);
+                        }
+                        return;
+                    }
+                }
             }
-            for (GameObject ob : objects) {
-                if (overlap(actor, ob)) {
-                    // the object is hit, and the actor is also
+        }
+    }
 
-                    if(ob instanceof Missile)
-                    {
-                        int playerID = (actor == s1 ? 1 : 0);
-                        PlayerStats stats = this.stats.get(playerID);
-                        stats.nPoints += pointsPerKill;
+    private void checkMissileCollisions() {
+        // Collisions with ships handled elsewhere
+        for (GameObject source : copyObjects()) {
+            if (source instanceof Missile) {
+                for (GameObject target : copyObjects()) {
+                    if (target instanceof Asteroid
+                        && overlap(source, target)) {
+                        //target.hit(this);
                     }
-
-                    if(ob instanceof Asteroid)
-                    {
-                        int playerID = (actor == s1 ? 0 : 1);
-                        PlayerStats stats = this.stats.get(playerID);
-                        stats.nPoints -= pointsPerKill;
-                    }
-
-                    if (ob instanceof Pickup) {
-                        int playerID = (actor == s1 ? 0 : 1);
-                        PlayerStats stats = this.stats.get(playerID);
-                        stats.nPoints += ((Pickup)ob).containedScore;
-                    }
-
-                    ob.hit(this);
-                    return;
                 }
             }
         }
