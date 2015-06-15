@@ -65,9 +65,6 @@ public class SimpleBattle {
         this.p2 = p2;
         reset();
 
-        stats.add(new PlayerStats(0, 0));
-        stats.add(new PlayerStats(0, 0));
-
         if (p1 instanceof KeyListener) {
             view.addKeyListener((KeyListener)p1);
             view.setFocusable(true);
@@ -100,6 +97,8 @@ public class SimpleBattle {
         s1 = buildShip(100, 250, 0);
         s2 = buildShip(500, 250, 1);
         this.currentTick = 0;
+
+        objects.add(new Asteroid(new Vector2d(10,10), new Vector2d(0,1),0));
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));

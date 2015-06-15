@@ -1,8 +1,6 @@
 package battle;
 
 import asteroids.GameObject;
-import asteroids.GameState;
-import asteroids.Ship;
 import math.Vector2d;
 
 import javax.swing.*;
@@ -21,8 +19,6 @@ public class BattleView extends JComponent {
     static Color bg = black;
     SimpleBattle game;
     // Font font;
-
-    Ship ship;
 
     static double viewScale = 1.0;
 

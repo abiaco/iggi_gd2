@@ -2,7 +2,6 @@ package battle;
 
 import asteroids.Action;
 import asteroids.GameObject;
-import asteroids.GameState;
 import asteroids.Missile;
 import math.Vector2d;
 

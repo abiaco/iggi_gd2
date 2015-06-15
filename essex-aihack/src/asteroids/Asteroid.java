@@ -18,11 +18,11 @@ public class Asteroid extends GameObject {
     double rot;
     boolean dead;
     int index;
-    GameState game;
+    //GameState game;
 
-    public Asteroid(GameState game, Vector2d s, Vector2d v, int index) {
+    public Asteroid(Vector2d s, Vector2d v, int index) {
         super(s, v);
-        this.game = game;
+        //this.game = game;
         rotRate = (rand.nextDouble() - 0.5) * Math.PI / 20;
         rot = 0;
         this.index = index;
@@ -73,7 +73,7 @@ public class Asteroid extends GameObject {
 
     @Override
     public GameObject copy() {
-        Asteroid asteroid = new Asteroid(game, s, v, index);
+        Asteroid asteroid = new Asteroid(s, v, index);
         updateClone(asteroid);
         return asteroid;
     }
@@ -88,6 +88,6 @@ public class Asteroid extends GameObject {
 
     public void hit() {
         dead = true;
-        game.asteroidDeath(this);
+        //game.asteroidDeath(this);
     }
 }

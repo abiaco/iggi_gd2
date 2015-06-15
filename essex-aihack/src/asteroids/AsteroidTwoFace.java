@@ -16,8 +16,8 @@ public class AsteroidTwoFace extends Asteroid implements PolyContains {
     Path2D redFace, greenFace;
     AffineTransform at;
 
-    public AsteroidTwoFace(GameState game, Vector2d s, Vector2d v, int index) {
-        super(game, s, v, index);
+    public AsteroidTwoFace(Vector2d s, Vector2d v, int index) {
+        super(s, v, index);
         at = new AffineTransform();
         at.setToRotation(rotRate);
     }
@@ -81,14 +81,14 @@ public class AsteroidTwoFace extends Asteroid implements PolyContains {
         System.out.println("Red hit = " + redHit);
         if (!redHit) {
             dead = true;
-            game.asteroidTwoFaceDeath(this);
+            //game.asteroidTwoFaceDeath(this);
         } else {
             // shoot a missile back at the ship
             Missile m = new Missile(s, new Vector2d(0, 0, true));
             double releaseVelocity = 5.0; // Math.min(releaseVelocity, maxRelease);
             m.ttl = 60;
             Vector2d d = new Vector2d(true);
-            d.set(game.ship.s);
+            //d.set(game.ship.s);
             d.subtract(s);
             d.normalise();
             m.v.add(d, releaseVelocity);
@@ -96,7 +96,7 @@ public class AsteroidTwoFace extends Asteroid implements PolyContains {
 
             m.s.add(m.v, (r() + missileRadius) * 1.5 / m.v.mag());
             releaseVelocity = 0;
-            game.add(m);
+            //game.add(m);
 
         }
     }
