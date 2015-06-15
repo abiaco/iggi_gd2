@@ -20,9 +20,8 @@ public class Pickup extends GameObject {
     double rotationRate;
 
     // Object specificc properties
-    int containedScore = 100;
+    public int containedScore = 100;
     SimpleBattle game;
-    boolean dead = false;
 
     public Pickup(SimpleBattle game, Vector2d s) {
         super(s, new Vector2d(0, 0));
@@ -82,8 +81,7 @@ public class Pickup extends GameObject {
         return s.toString();
     }
 
-    public void hit() {
-
-        // TODO?
+    public void hit(SimpleBattle bollocks) {
+        dead = true;
     }
 }

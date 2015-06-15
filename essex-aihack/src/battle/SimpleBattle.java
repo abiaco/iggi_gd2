@@ -2,6 +2,7 @@ package battle;
 
 import asteroids.*;
 import math.Vector2d;
+import pickups.Pickup;
 import utilities.JEasyFrame;
 
 import java.awt.event.KeyListener;
@@ -99,6 +100,7 @@ public class SimpleBattle {
         this.currentTick = 0;
 
         objects.add(new Asteroid(new Vector2d(10,10), new Vector2d(0,1),2));
+        objects.add(new Pickup(this, new Vector2d(100, 100)));
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
@@ -212,8 +214,12 @@ public class SimpleBattle {
                         int playerID = (actor == s1 ? 0 : 1);
                         PlayerStats stats = this.stats.get(playerID);
                         stats.nPoints -= pointsPerKill;
+                    }
 
-
+                    if (ob instanceof Pickup) {
+                        int playerID = (actor == s1 ? 0 : 1);
+                        PlayerStats stats = this.stats.get(playerID);
+                        stats.nPoints += ((Pickup)ob).containedScore;
                     }
 
                     ob.hit(this);
