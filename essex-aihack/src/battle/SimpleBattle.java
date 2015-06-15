@@ -44,6 +44,8 @@ public class SimpleBattle {
     BattleController p1, p2;
     BattleView view;
     int currentTick;
+    public ArrayList<Integer> Missiles_Histogram;
+    public ArrayList<Integer> Missiles_Histogram2;
 
     public SimpleBattle() {
         this(true);
@@ -83,6 +85,18 @@ public class SimpleBattle {
 
         while (!isGameOver()) {
             update();
+        }
+        File file = new File ("Missiles1.txt");
+	        File file2 = new File ("Missiles2.txt");
+	        try {
+	            PrintWriter histwriter1 = new PrintWriter("Missiles1.txt");
+	            PrintWriter histwriter2 = new PrintWriter("Missiles2.txt");
+	            histwriter1.print(Missiles_Histogram.toString());
+	            histwriter2.print(Missiles_Histogram2.toString());
+	            histwriter1.close();
+	            histwriter2.close();
+	        } catch (Exception e) {
+	
         }
 
         if (p1 instanceof KeyListener) {
