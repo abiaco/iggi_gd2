@@ -13,7 +13,7 @@ public class Pickup extends GameObject {
     // Visuals properties
     static int nVerts = 5;
     static int vertsStep = 2;
-    int radius = 15;
+    int radius = 5;
     static Stroke stroke = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
     int[] px, py;
     double rotation;
@@ -60,9 +60,9 @@ public class Pickup extends GameObject {
         }
         g.translate(s.x, s.y);
         g.rotate(rotation);
-        g.setColor(Color.white);
+        g.setColor(Color.yellow);
         g.setStroke(stroke);
-        g.drawPolygon(px, py, px.length);
+        g.fillPolygon(px, py, px.length);
         g.setTransform(at);
     }
 
