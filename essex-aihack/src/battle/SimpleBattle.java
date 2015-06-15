@@ -33,7 +33,7 @@ public class SimpleBattle {
 
     ArrayList<BattleController> controllers;
 
-    ArrayList<GameObject> objects;
+    public ArrayList<GameObject> objects;
     ArrayList<PlayerStats> stats;
 
     NeuroShip s1, s2;
@@ -98,7 +98,7 @@ public class SimpleBattle {
         s2 = buildShip(500, 250, 1);
         this.currentTick = 0;
 
-        objects.add(new Asteroid(new Vector2d(10,10), new Vector2d(0,1),0));
+        objects.add(new Asteroid(new Vector2d(10,10), new Vector2d(0,1),2));
 
         stats.add(new PlayerStats(0, 0));
         stats.add(new PlayerStats(0, 0));
@@ -200,11 +200,23 @@ public class SimpleBattle {
                 if (overlap(actor, ob)) {
                     // the object is hit, and the actor is also
 
-                    int playerID = (actor == s1 ? 1 : 0);
-                    PlayerStats stats = this.stats.get(playerID);
-                    stats.nPoints += pointsPerKill;
+                    if(ob instanceof Missile)
+                    {
+                        int playerID = (actor == s1 ? 1 : 0);
+                        PlayerStats stats = this.stats.get(playerID);
+                        stats.nPoints += pointsPerKill;
+                    }
 
-                    ob.hit();
+                    if(ob instanceof Asteroid)
+                    {
+                        int playerID = (actor == s1 ? 0 : 1);
+                        PlayerStats stats = this.stats.get(playerID);
+                        stats.nPoints -= pointsPerKill;
+
+
+                    }
+
+                    ob.hit(this);
                     return;
                 }
             }

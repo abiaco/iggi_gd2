@@ -161,7 +161,7 @@ public class NeuroShip extends GameObject {
         g.setTransform(at);
     }
 
-    public void hit() {
+    public void hit(SimpleBattle hitBy) {
         // super.hit();
         // System.out.println("Ship destroyed");
         dead = true;

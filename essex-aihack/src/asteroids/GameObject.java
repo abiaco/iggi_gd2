@@ -1,5 +1,6 @@
 package asteroids;
 
+import battle.SimpleBattle;
 import math.Vector2d;
 
 import java.awt.*;
@@ -31,7 +32,7 @@ public abstract class GameObject {
 
     public abstract boolean dead();
 
-    public void hit() {
+    public void hit(SimpleBattle hitBy) {
         dead  = true;
     }
 

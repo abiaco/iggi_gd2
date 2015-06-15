@@ -1,5 +1,7 @@
 package asteroids;
 
+import battle.NeuroShip;
+import battle.SimpleBattle;
 import math.Vector2d;
 
 import java.awt.*;
@@ -26,7 +28,7 @@ public class Asteroid extends GameObject {
         rotRate = (rand.nextDouble() - 0.5) * Math.PI / 20;
         rot = 0;
         this.index = index;
-        r = radii[index];
+        r = radii[2-index];
         setPolygon();
     }
 
@@ -86,8 +88,23 @@ public class Asteroid extends GameObject {
         return s.toString();
     }
 
-    public void hit() {
+    public void hit(SimpleBattle hitBy) {
         dead = true;
         //game.asteroidDeath(this);
+
+            // if we still have smaller ones to
+            // work through then do so
+            // otherwise do nothing
+            // score += asteroidScore;
+            if (index > 0) {
+                // add some new ones at this position
+                for (int i=0; i<nSplits; i++) {
+
+                    Vector2d v1 = new Vector2d(v,true);
+                    v1.add(rand.nextGaussian(), rand.nextGaussian());
+                    Asteroid a1 = new Asteroid(new Vector2d(s, true), v1, index - 1);
+                    hitBy.objects.add(a1);
+                }
+            }
     }
 }
