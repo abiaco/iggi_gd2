@@ -32,6 +32,8 @@ public class SimpleBattle {
     static int pointsPerKill = 10;
     static int releaseVelocity = 5;
 
+    static int logFrequency = 10;
+
     boolean visible = true;
 
     static int nAsteroids = 10;
@@ -46,8 +48,7 @@ public class SimpleBattle {
     BattleController p1, p2;
     BattleView view;
     int currentTick;
-    public ArrayList<Integer> Missiles_Histogram;
-    public ArrayList<Integer> Missiles_Histogram2;
+    BattleLogger logger1, logger2;
 
     public SimpleBattle() {
         this(true);
@@ -57,6 +58,9 @@ public class SimpleBattle {
         this.objects = new ArrayList<>();
         this.stats = new ArrayList<>();
         this.visible = visible;
+
+        logger1 = new BattleLogger(0);
+        logger2 = new BattleLogger(1);
 
         if (visible) {
             view = new BattleView(this);
@@ -85,21 +89,17 @@ public class SimpleBattle {
             view.requestFocus();
         }
 
+        int framesUntilLog = 1;
         while (!isGameOver()) {
             update();
+            if (--framesUntilLog == 0) {
+                logger1.log(this);
+                logger2.log(this);
+                framesUntilLog = logFrequency;
+            }
         }
-        File file = new File ("Missiles1.txt");
-	        File file2 = new File ("Missiles2.txt");
-	        try {
-	            PrintWriter histwriter1 = new PrintWriter("Missiles1.txt");
-	            PrintWriter histwriter2 = new PrintWriter("Missiles2.txt");
-	            histwriter1.print(Missiles_Histogram.toString());
-	            histwriter2.print(Missiles_Histogram2.toString());
-	            histwriter1.close();
-	            histwriter2.close();
-	        } catch (Exception e) {
-	
-        }
+        logger1.close();
+        logger2.close();
 
         if (p1 instanceof KeyListener) {
             view.removeKeyListener((KeyListener)p1);
