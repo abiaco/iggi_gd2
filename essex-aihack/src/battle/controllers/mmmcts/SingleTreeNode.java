@@ -224,7 +224,7 @@ public class SingleTreeNode
     public double value(SimpleBattle a_gameState, int playerId) {
 
         //double score = OGState.getPoints(playerId);
-        double score = 5000;
+        double score = 0;
 
         NeuroShip s1,s2;
         s1 = a_gameState.getShip(playerId);
@@ -232,12 +232,19 @@ public class SingleTreeNode
 
         if(OGState.getPoints(1-playerId) < a_gameState.getPoints(1-playerId))
         {
-            score += HUGE_NEGATIVE;
+            //score -= SCORE_BONUS;
+            score -= a_gameState.getPoints(1-playerId) - OGState.getPoints(1-playerId);
         }
 
         if(a_gameState.getPoints(playerId) > OGState.getPoints(playerId)) {
             //score += HUGE_POSITIVE;
-            score += SCORE_BONUS;
+            //score += SCORE_BONUS * 10;
+            score += a_gameState.getPoints(playerId) - OGState.getPoints(playerId);
+        }
+
+        if(a_gameState.getPoints(playerId) < OGState.getPoints(playerId)) {
+            //score -= SCORE_BONUS * 2;
+            score -= OGState.getPoints(playerId) - a_gameState.getPoints(playerId);
         }
 
         int mleft =  Math.abs(a_gameState.getMissilesLeft(playerId));
@@ -245,16 +252,17 @@ public class SingleTreeNode
         double dist = s1.s.dist(s2.s);
 
         if(mleft > 0) {
-            //score -= 2000 * mused;
-            score += MISSILES_LEFT_MOD * mleft;
+            score -= mused > 0 ? 9 : 0;
+            //score += MISSILES_LEFT_MOD * mleft;
 
             //int gravitateTowards = 100;
-            if(GRAVITATE)
+            /*if(GRAVITATE)
                 score += DISTANCE_MOD * -Math.abs(GRAVITATE_DISTANCE - dist);
             else
-                score += -dist * DISTANCE_MOD;
+                score += -dist * DISTANCE_MOD; */
         } else {
-            score += dist * DISTANCE_MOD;
+            //score -= SCORE_BONUS;
+            //score += dist * DISTANCE_MOD;
         }
 
         //double alpha = 180 + Math.atan2((s1.s.y - s2.s.y), (s1.s.x - s2.s.x));

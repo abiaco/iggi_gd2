@@ -1,5 +1,6 @@
 package asteroids;
 
+import battle.SimpleBattle;
 import math.Vector2d;
 
 import java.awt.*;
@@ -39,12 +40,16 @@ public class Missile extends GameObject {
     }
 
     public boolean dead() {
-        return ttl <= 0;
+
+        return (ttl <= 0) || (dead);
     }
 
-    public void hit() {
+    public void hit(SimpleBattle hitBy) {
         // kill it by setting ttl to zero
-        ttl = 0;
+
+        ttl = -1;
+
+        dead = true;
     }
 
     public String toString() {

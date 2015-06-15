@@ -229,6 +229,8 @@ public class SimpleBattle {
                 for (GameObject target : objects) {
                     if (overlap(actor, target)) {
                         if (target instanceof Asteroid) {
+                            //target.hit(this);
+                            actor.hit(this);
                             target.hit(this);
                         }
                         return;
@@ -240,15 +242,9 @@ public class SimpleBattle {
 
     private void checkMissileCollisions() {
         // Collisions with ships handled elsewhere
-        for (GameObject source : copyObjects()) {
-            if (source instanceof Missile) {
-                for (GameObject target : copyObjects()) {
-                    if (target instanceof Asteroid
-                        && overlap(source, target)) {
-                        //target.hit(this);
-                    }
-                }
-            }
+        for(GameObject m : copyObjects())
+        {
+            checkCollision(m);
         }
     }
 

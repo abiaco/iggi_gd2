@@ -13,7 +13,7 @@ public class Pickup extends GameObject {
     // Visuals properties
     static int nVerts = 5;
     static int vertsStep = 2;
-    int radius = 5;
+    int radius = 12;
     static Stroke stroke = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
     int[] px, py;
     double rotation;
