@@ -6,6 +6,8 @@ import pickups.Pickup;
 import utilities.JEasyFrame;
 
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -308,7 +310,7 @@ public class SimpleBattle {
         g.setColor(bg);
         g.fillRect(0, 0, size.width, size.height);
 
-        for (GameObject go : objects) {
+        for (GameObject go : getObjects()) {
             go.draw(g);
         }
 

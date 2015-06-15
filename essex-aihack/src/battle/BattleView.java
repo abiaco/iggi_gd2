@@ -54,7 +54,7 @@ public class BattleView extends JComponent {
 
     public void paintState(Graphics2D g) {
 
-        for (GameObject object : game.objects) {
+        for (GameObject object : game.getObjects()) {
             object.draw(g);
         }
 
