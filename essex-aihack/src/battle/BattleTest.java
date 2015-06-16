@@ -17,7 +17,7 @@ public class BattleTest {
         SimpleBattle battle = new SimpleBattle(true);
 
         BattleController player1 = new MMMCTS();
-        BattleController player2 = new MMMCTS();
+        BattleController player2 = new WASDController();
         ElapsedCpuTimer ecp = new ElapsedCpuTimer();
         battle.playGame(player1, player2);
         System.out.println("Time to run " + ecp.elapsedMillis());
