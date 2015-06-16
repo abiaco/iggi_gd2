@@ -1,10 +1,13 @@
 package battle.controllers.mmmcts;
 
 import asteroids.Action;
+import asteroids.GameObject;
 import battle.NeuroShip;
 import battle.SimpleBattle;
 import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
 import battle.controllers.mmmcts.tools.Utils;
+import math.Vector2d;
+import pickups.Pickup;
 
 import java.util.Random;
 
@@ -56,11 +59,15 @@ public class SingleTreeNode
         int numIters = 0;
 
         int remainingLimit = 5;
+        //System.out.println("MCTS Time remaining = " + remaining + " - Average time = " + avgTimeTaken);
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
             ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
             SingleTreeNode selected = treePolicy(playerID);
+            System.out.println("Tree policy: " + elapsedTimerIteration.elapsedMillis());
             double delta = selected.rollOut(playerID);
+            System.out.println("Rollout: " + elapsedTimerIteration.elapsedMillis());
             backUp(selected, delta);
+            System.out.println("Backup: " + elapsedTimerIteration.elapsedMillis());
 
             numIters++;
             acumTimeTaken += (elapsedTimerIteration.elapsedMillis()) ;
@@ -215,14 +222,18 @@ public class SingleTreeNode
         return delta;
     }
 
+    public static int SCORE_MOD = 0;
     public static int SCORE_BONUS = 300;
-    public static int MISSILES_LEFT_MOD = 10;
-    public static int DISTANCE_MOD = 12;
+    public static int MISSILES_LEFT_MOD = 0;
+    public static int DISTANCE_MOD = 1;
     public static int GRAVITATE_DISTANCE = 40;
     public static boolean GRAVITATE = false;
 
+    public static int Calls = 0;
+
     public double value(SimpleBattle a_gameState, int playerId) {
 
+        Calls++;
         //double score = OGState.getPoints(playerId);
         double score = 0;
 
@@ -230,29 +241,47 @@ public class SingleTreeNode
         s1 = a_gameState.getShip(playerId);
         s2 = a_gameState.getShip(1-playerId);
 
-        if(OGState.getPoints(1-playerId) < a_gameState.getPoints(1-playerId))
+        //if(OGState.getPoints(1-playerId) < a_gameState.getPoints(1-playerId))
         {
             //score -= SCORE_BONUS;
-            score -= a_gameState.getPoints(1-playerId) - OGState.getPoints(1-playerId);
+            score -= SCORE_MOD * (a_gameState.getPoints(1-playerId) - OGState.getPoints(1-playerId));
         }
 
-        if(a_gameState.getPoints(playerId) > OGState.getPoints(playerId)) {
+        //if(a_gameState.getPoints(playerId) > OGState.getPoints(playerId)) {
             //score += HUGE_POSITIVE;
             //score += SCORE_BONUS * 10;
-            score += a_gameState.getPoints(playerId) - OGState.getPoints(playerId);
+            score += SCORE_MOD * (a_gameState.getPoints(playerId) - OGState.getPoints(playerId));
+        //}
+
+        //if(a_gameState.getPoints(playerId) < OGState.getPoints(playerId)) {
+            //score -= SCORE_BONUS * 2;
+        //    score -= OGState.getPoints(playerId) - a_gameState.getPoints(playerId);
+        //}
+
+        double nearestPickupDistance = HUGE_POSITIVE;
+        Vector2d nearestPickupLocation = new Vector2d();
+
+        for(GameObject go : a_gameState.getObjects())
+        {
+            if(go instanceof Pickup)
+            {
+                double tempDistance = go.s.dist(s1.s);
+                if(tempDistance < nearestPickupDistance)
+                {
+                    nearestPickupDistance = tempDistance;
+                    nearestPickupLocation = go.s;
+                }
+            }
         }
 
-        if(a_gameState.getPoints(playerId) < OGState.getPoints(playerId)) {
-            //score -= SCORE_BONUS * 2;
-            score -= OGState.getPoints(playerId) - a_gameState.getPoints(playerId);
-        }
+        score += DISTANCE_MOD * (2000 - nearestPickupDistance);
 
         int mleft =  Math.abs(a_gameState.getMissilesLeft(playerId));
         int mused = Math.abs(OGState.getMissilesLeft(playerId)) - (mleft);
         double dist = s1.s.dist(s2.s);
 
         if(mleft > 0) {
-            score -= mused > 0 ? 9 : 0;
+            score -= mused > 0 ? 9 * MISSILES_LEFT_MOD : 0;
             //score += MISSILES_LEFT_MOD * mleft;
 
             //int gravitateTowards = 100;

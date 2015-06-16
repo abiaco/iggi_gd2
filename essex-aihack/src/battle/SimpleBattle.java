@@ -36,8 +36,8 @@ public class SimpleBattle {
 
     boolean visible = true;
 
-    static int nAsteroids = 10;
-    static int nPickups = 5;
+    static int nAsteroids = 0;
+    static int nPickups = 0;
 
     ArrayList<BattleController> controllers;
 
