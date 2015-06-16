@@ -29,16 +29,15 @@ public class SimpleBattle {
     // each player
     static int nMissiles = 100;
     static int nTicks = 1000;
-    static int pointsPerKill = 1000;
-    static int pointsPerAsteroidHit = 20;
+    static int pointsPerKill = 10;
     static int releaseVelocity = 5;
 
     static int logFrequency = 10;
 
     boolean visible = true;
 
-    static int nAsteroids = 9;
-    static int nPickups = 3;
+    static int nAsteroids = 10;
+    static int nPickups = 5;
 
     ArrayList<BattleController> controllers;
 
@@ -60,11 +59,10 @@ public class SimpleBattle {
         this.stats = new ArrayList<>();
         this.visible = visible;
 
-
+        logger1 = new BattleLogger(0);
+        logger2 = new BattleLogger(1);
 
         if (visible) {
-            logger1 = new BattleLogger(0);
-            logger2 = new BattleLogger(1);
             view = new BattleView(this);
             new JEasyFrame(view, "battle");
         }
@@ -95,18 +93,13 @@ public class SimpleBattle {
         while (!isGameOver()) {
             update();
             if (--framesUntilLog == 0) {
-                if(visible) {
-                    logger1.log(this);
-                    logger2.log(this);
-                }
+                logger1.log(this);
+                logger2.log(this);
                 framesUntilLog = logFrequency;
             }
         }
-
-        if(visible) {
-            logger1.close();
-            logger2.close();
-        }
+        logger1.close();
+        logger2.close();
 
         if (p1 instanceof KeyListener) {
             view.removeKeyListener((KeyListener)p1);
@@ -153,7 +146,6 @@ public class SimpleBattle {
 
         // apply them to each player's ship, taking actions as necessary
         Action a1 = p1.getAction(this.clone(), 0);
-        //System.out.println(a1.toString());
         Action a2 = p2.getAction(this.clone(), 1);
         update(a1, a2);
     }
@@ -163,15 +155,13 @@ public class SimpleBattle {
         s1.update(a1);
         s2.update(a2);
 
-        if (a1.shoot) fireMissile(s1.s, s1.d, 0);
-        if (a2.shoot) fireMissile(s2.s, s2.d, 1);
-
         checkCollision(s1);
         checkCollision(s2);
         checkMissileCollisions();
 
         // and fire any missiles as necessary
-
+        if (a1.shoot) fireMissile(s1.s, s1.d, 0);
+        if (a2.shoot) fireMissile(s2.s, s2.d, 1);
 
         wrap(s1);
         wrap(s2);
@@ -241,7 +231,7 @@ public class SimpleBattle {
                         } else if(target instanceof Asteroid) {
                             int playerID = (actor == s1 ? 0 : 1);
                             PlayerStats stats = this.stats.get(playerID);
-                            stats.nPoints -= pointsPerAsteroidHit;
+                            stats.nPoints -= pointsPerKill;
                         } else if (target instanceof Pickup) {
                             int playerID = (actor == s1 ? 0 : 1);
                             PlayerStats stats = this.stats.get(playerID);
