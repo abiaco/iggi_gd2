@@ -65,15 +65,15 @@ public class MMMCTS implements BattleController {
             //Determine the action using MCTS...
             int actionInt = mctsPlayer.run(timer);
             Action action = actions.get(actionInt).buildAction();
+            Action subsequentActions = new Action(action.thrust, action.turn, false);
 
             //... and return it.
             actionQueue.add(action);
-            action.shoot = false;
             for (int i=1 ; i<MACRO_ACTION_LENGTH ; i++)
-                actionQueue.add(action);
+                actionQueue.add(subsequentActions);
         }
         Action action = actionQueue.get(0);
-        actionQueue.remove(actionQueue.size() - 1);
+        actionQueue.remove(0);
         return action;
     }
 
