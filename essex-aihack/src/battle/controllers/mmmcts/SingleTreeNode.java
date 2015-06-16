@@ -113,11 +113,16 @@ public class SingleTreeNode
         }
 
         SimpleBattle nextState = state.clone();
+        Action bestActionA = MMMCTS.actions.get(bestAction).buildAction();
         for(int i=0;i<MMMCTS.MACRO_ACTION_LENGTH;i++) {
             if (playerId == 0) {
-                nextState.update(MMMCTS.actions.get(bestAction).buildAction(), DEFAULTACTION);
+                nextState.update(bestActionA, DEFAULTACTION);
             } else {
-                nextState.update(DEFAULTACTION, MMMCTS.actions.get(bestAction).buildAction());
+                nextState.update(DEFAULTACTION, bestActionA);
+            }
+            if(i==0)
+            {
+                bestActionA.shoot = false;
             }
         }
 
@@ -205,11 +210,16 @@ public class SingleTreeNode
         while (!finishRollout(rollerState,thisDepth)) {
 
             int action = m_rnd.nextInt(MMMCTS.NUM_ACTIONS);
+            Action bestActionA = MMMCTS.actions.get(action).buildAction();
             for(int i=0;i<MMMCTS.MACRO_ACTION_LENGTH;i++) {
                 if (playerId == 0) {
-                    rollerState.update(MMMCTS.actions.get(action).buildAction(), DEFAULTACTION);
+                    rollerState.update(bestActionA, DEFAULTACTION);
                 } else {
-                    rollerState.update(DEFAULTACTION, MMMCTS.actions.get(action).buildAction());
+                    rollerState.update(DEFAULTACTION, bestActionA);
+                }
+                if(i==0)
+                {
+                    bestActionA.shoot = false;
                 }
             }
             thisDepth++;
@@ -226,7 +236,7 @@ public class SingleTreeNode
         return delta;
     }
 
-    public static int SCORE_MOD = 2;
+    public static int SCORE_MOD = 1;
     public static int SCORE_BONUS = 300;
     public static int MISSILES_LEFT_MOD = 2;
     public static int DISTANCE_MOD = 0;
@@ -237,7 +247,7 @@ public class SingleTreeNode
         //double score = OGState.getPoints(playerId);
         double score = 0;
 
-        score = SCORE_MOD * (a_gameState.getPoints(playerId) - a_gameState.getPoints(1-playerId)) + a_gameState.getMissilesLeft(playerId) * MISSILES_LEFT_MOD;
+        score = SCORE_MOD * (a_gameState.getPoints(playerId) - a_gameState.getPoints(1-playerId)) + Math.abs(a_gameState.getMissilesLeft(playerId)) * MISSILES_LEFT_MOD;
 
         /*NeuroShip s1,s2;
         s1 = a_gameState.getShip(playerId);
