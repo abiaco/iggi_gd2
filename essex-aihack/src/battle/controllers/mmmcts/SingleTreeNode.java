@@ -226,7 +226,7 @@ public class SingleTreeNode
         return delta;
     }
 
-    public static int SCORE_MOD = 2;
+    public static int SCORE_MOD = 1;
     public static int SCORE_BONUS = 300;
     public static int MISSILES_LEFT_MOD = 2;
     public static int DISTANCE_MOD = 0;
@@ -237,7 +237,7 @@ public class SingleTreeNode
         //double score = OGState.getPoints(playerId);
         double score = 0;
 
-        score = SCORE_MOD * (a_gameState.getPoints(playerId) - a_gameState.getPoints(1-playerId)) + a_gameState.getMissilesLeft(playerId) * MISSILES_LEFT_MOD;
+        score = SCORE_MOD * (a_gameState.getPoints(playerId) - a_gameState.getPoints(1-playerId)) + Math.abs(a_gameState.getMissilesLeft(playerId)) * MISSILES_LEFT_MOD;
 
         /*NeuroShip s1,s2;
         s1 = a_gameState.getShip(playerId);
