@@ -113,11 +113,16 @@ public class SingleTreeNode
         }
 
         SimpleBattle nextState = state.clone();
+        Action bestActionA = MMMCTS.actions.get(bestAction).buildAction();
         for(int i=0;i<MMMCTS.MACRO_ACTION_LENGTH;i++) {
             if (playerId == 0) {
-                nextState.update(MMMCTS.actions.get(bestAction).buildAction(), DEFAULTACTION);
+                nextState.update(bestActionA, DEFAULTACTION);
             } else {
-                nextState.update(DEFAULTACTION, MMMCTS.actions.get(bestAction).buildAction());
+                nextState.update(DEFAULTACTION, bestActionA);
+            }
+            if(i==0)
+            {
+                bestActionA.shoot = false;
             }
         }
 
@@ -205,11 +210,16 @@ public class SingleTreeNode
         while (!finishRollout(rollerState,thisDepth)) {
 
             int action = m_rnd.nextInt(MMMCTS.NUM_ACTIONS);
+            Action bestActionA = MMMCTS.actions.get(action).buildAction();
             for(int i=0;i<MMMCTS.MACRO_ACTION_LENGTH;i++) {
                 if (playerId == 0) {
-                    rollerState.update(MMMCTS.actions.get(action).buildAction(), DEFAULTACTION);
+                    rollerState.update(bestActionA, DEFAULTACTION);
                 } else {
-                    rollerState.update(DEFAULTACTION, MMMCTS.actions.get(action).buildAction());
+                    rollerState.update(DEFAULTACTION, bestActionA);
+                }
+                if(i==0)
+                {
+                    bestActionA.shoot = false;
                 }
             }
             thisDepth++;
