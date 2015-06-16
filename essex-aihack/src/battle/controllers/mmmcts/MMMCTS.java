@@ -5,8 +5,7 @@ import battle.BattleController;
 import battle.SimpleBattle;
 import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,10 +20,10 @@ public class MMMCTS implements BattleController {
     public static int ROLLOUT_DEPTH = 16;
     public static double K = Math.sqrt(2);
     public static ArrayList<MacroAction> actions;
+    private ArrayList<Action> actionQueue;
 
-    public static int MACRO_ACTION_LENGTH = 5;
-
-    public static int TIMETOTHINK = 25;
+    public static int MACRO_ACTION_LENGTH = 3;
+    public static int TIMETOTHINK = 50;
 
     /**
      * Random generator for the agent.
@@ -34,6 +33,8 @@ public class MMMCTS implements BattleController {
     public MMMCTS()
     {
         actions = new ArrayList<MacroAction>();
+        actionQueue = new ArrayList<>();
+
         //Get the actions in a static array.
         for(int i = MacroAction.ACTION_NO_FRONT; i <= MacroAction.ACTION_THR_RIGHT_SHOOT; ++i)  //6 actions
         //for(int i = Controller.ACTION_THR_FRONT; i <= Controller.ACTION_THR_RIGHT; ++i)   //Only 3 actions
@@ -51,20 +52,27 @@ public class MMMCTS implements BattleController {
     }
 
     public Action getAction(SimpleBattle gameStateCopy, int playerId) {
-        //ArrayList<Observation> obs[] = stateObs.getFromAvatarSpritesPositions();
-        //ArrayList<Observation> grid[][] = stateObs.getObservationGrid();
+        if (actionQueue.size() == 0) {
+            //ArrayList<Observation> obs[] = stateObs.getFromAvatarSpritesPositions();
+            //ArrayList<Observation> grid[][] = stateObs.getObservationGrid();
 
-        //Set the state observation object as the new root of the tree.
-        mctsPlayer.init(gameStateCopy, playerId);
+            //Set the state observation object as the new root of the tree.
+            mctsPlayer.init(gameStateCopy, playerId);
 
-        ElapsedCpuTimer timer = new ElapsedCpuTimer();
-        timer.setMaxTimeMillis(TIMETOTHINK);
+            ElapsedCpuTimer timer = new ElapsedCpuTimer();
+            timer.setMaxTimeMillis(TIMETOTHINK);
 
-        //Determine the action using MCTS...
-        int action = mctsPlayer.run(timer);
+            //Determine the action using MCTS...
+            int actionInt = mctsPlayer.run(timer);
+            Action action = actions.get(actionInt).buildAction();
 
-        //... and return it.
-        return actions.get(action).buildAction();
+            //... and return it.
+            for (int i=0 ; i<MACRO_ACTION_LENGTH ; i++)
+                actionQueue.add(action);
+        }
+        Action action = actionQueue.get(0);
+        actionQueue.remove(actionQueue.size() - 1);
+        return action;
     }
 
 }
