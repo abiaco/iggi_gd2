@@ -12,7 +12,7 @@ public class JEasyFrame extends JFrame {
         getContentPane().add(BorderLayout.CENTER, comp);
         pack();
         this.setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(EXIT_ON_CLOSE);
         repaint();
     }
 }

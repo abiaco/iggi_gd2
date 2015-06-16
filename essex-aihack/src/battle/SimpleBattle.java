@@ -51,6 +51,8 @@ public class SimpleBattle {
     int currentTick;
     BattleLogger logger1, logger2;
 
+    public JEasyFrame windowFrame;
+
     public SimpleBattle() {
         this(true);
     }
@@ -66,7 +68,7 @@ public class SimpleBattle {
             logger1 = new BattleLogger(0);
             logger2 = new BattleLogger(1);
             view = new BattleView(this);
-            new JEasyFrame(view, "battle");
+            windowFrame = new JEasyFrame(view, "battle");
         }
     }
 
