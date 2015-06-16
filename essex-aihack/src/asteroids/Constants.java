@@ -20,7 +20,7 @@ public interface Constants {
 
     Color[] pColors = {Color.blue, Color.red};
 
-    int delay = 5;
+    int delay = 20;
     double ac = 0.01;
     double t = 1.0;
     Random rand = new Random();

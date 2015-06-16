@@ -51,6 +51,8 @@ public class SimpleBattle {
     int currentTick;
     BattleLogger logger1, logger2;
 
+    public JEasyFrame windowFrame;
+
     public SimpleBattle() {
         this(true);
     }
@@ -62,7 +64,7 @@ public class SimpleBattle {
 
         if (visible) {
             view = new BattleView(this);
-            new JEasyFrame(view, "battle");
+            windowFrame = new JEasyFrame(view, "battle");
         }
     }
 
