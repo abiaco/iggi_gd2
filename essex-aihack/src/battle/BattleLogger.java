@@ -2,6 +2,8 @@ package battle;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by bedder on 15/06/2015.
@@ -14,17 +16,19 @@ public class BattleLogger {
     PrintWriter score;
 
 
-    BattleLogger(int playerId) {
+    BattleLogger(String agent, int playerId) {
         this.playerId = playerId;
+        String baseString = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        baseString = baseString + "-" + agent + "-" + playerId;
 
         try {
-            new File("missiles-" + playerId + ".csv");
-            new File("velocity-" + playerId + ".csv");
-            new File("score-" + playerId + ".csv");
+            new File(baseString + "-missiles.csv");
+            new File(baseString + "-velocity.csv");
+            new File(baseString + "-score.csv");
 
-            missiles = new PrintWriter("missiles-" + playerId + ".csv");
-            velocity = new PrintWriter("velocity-" + playerId + ".csv");
-            score    = new PrintWriter("score-" + playerId + ".csv");
+            missiles = new PrintWriter(baseString + "-missiles.csv");
+            velocity = new PrintWriter(baseString + "-velocity.csv");
+            score    = new PrintWriter(baseString + "-score.csv");
         } catch (Exception e) {
         }
     }

@@ -60,11 +60,7 @@ public class SimpleBattle {
         this.stats = new ArrayList<>();
         this.visible = visible;
 
-
-
         if (visible) {
-            logger1 = new BattleLogger(0);
-            logger2 = new BattleLogger(1);
             view = new BattleView(this);
             new JEasyFrame(view, "battle");
         }
@@ -75,6 +71,11 @@ public class SimpleBattle {
     }
 
     public int playGame(BattleController p1, BattleController p2) {
+        if (visible) {
+            logger1 = new BattleLogger(p1.getClass().toString(), 0);
+            logger2 = new BattleLogger(p2.getClass().toString(), 1);
+        }
+
         this.p1 = p1;
         this.p2 = p2;
         reset();
