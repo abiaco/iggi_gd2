@@ -36,8 +36,8 @@ public class SimpleBattle {
 
     boolean visible = true;
 
-    static int nAsteroids = 10;
-    static int nPickups = 5;
+    static int nAsteroids = 9;
+    static int nPickups = 3;
 
     ArrayList<BattleController> controllers;
 
@@ -59,10 +59,11 @@ public class SimpleBattle {
         this.stats = new ArrayList<>();
         this.visible = visible;
 
-        logger1 = new BattleLogger(0);
-        logger2 = new BattleLogger(1);
+
 
         if (visible) {
+            logger1 = new BattleLogger(0);
+            logger2 = new BattleLogger(1);
             view = new BattleView(this);
             new JEasyFrame(view, "battle");
         }
@@ -93,13 +94,18 @@ public class SimpleBattle {
         while (!isGameOver()) {
             update();
             if (--framesUntilLog == 0) {
-                logger1.log(this);
-                logger2.log(this);
+                if(visible) {
+                    logger1.log(this);
+                    logger2.log(this);
+                }
                 framesUntilLog = logFrequency;
             }
         }
-        logger1.close();
-        logger2.close();
+
+        if(visible) {
+            logger1.close();
+            logger2.close();
+        }
 
         if (p1 instanceof KeyListener) {
             view.removeKeyListener((KeyListener)p1);
