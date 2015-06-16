@@ -73,6 +73,11 @@ public class Pickup extends GameObject {
         return pickup;
     }
 
+    @Override
+    public double r() {
+        return radius * 1.2f;
+    }
+
     public void update() {
         rotation += rotationRate;
     }
