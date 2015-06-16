@@ -18,13 +18,13 @@ import java.util.Random;
 public class MMMCTS implements BattleController {
 
     public static int NUM_ACTIONS;
-    public static int ROLLOUT_DEPTH = 10;
+    public static int ROLLOUT_DEPTH = 16;
     public static double K = Math.sqrt(2);
     public static ArrayList<MacroAction> actions;
 
-    public static int MACRO_ACTION_LENGTH = 1;
+    public static int MACRO_ACTION_LENGTH = 5;
 
-    public static int TIMETOTHINK = 20;
+    public static int TIMETOTHINK = 25;
 
     /**
      * Random generator for the agent.
