@@ -236,9 +236,9 @@ public class SingleTreeNode
         return delta;
     }
 
-    public static int SCORE_MOD = 1;
+    public static int SCORE_MOD = 2;
     public static int SCORE_BONUS = 300;
-    public static int MISSILES_LEFT_MOD = 2;
+    public static int MISSILES_LEFT_MOD = 3;
     public static int DISTANCE_MOD = 0;
     public static int GRAVITATE_DISTANCE = 40;
     public static boolean GRAVITATE = false;

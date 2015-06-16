@@ -17,7 +17,7 @@ public class RoundRobin {
 
     public static double BattleBetweenControllers(BattleController p1, BattleController p2)
     {
-        SimpleBattle battle = new SimpleBattle(false);
+        SimpleBattle battle = new SimpleBattle(false, true);
 
         ElapsedCpuTimer ecp = new ElapsedCpuTimer();
 

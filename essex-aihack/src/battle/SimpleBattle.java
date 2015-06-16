@@ -6,8 +6,6 @@ import pickups.Pickup;
 import utilities.JEasyFrame;
 
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -53,14 +51,17 @@ public class SimpleBattle {
 
     public JEasyFrame windowFrame;
 
+    boolean isLoggingEnabled;
+
     public SimpleBattle() {
-        this(true);
+        this(true, false);
     }
 
-    public SimpleBattle(boolean visible) {
+    public SimpleBattle(boolean visible, boolean loggingEnabled) {
         this.objects = new ArrayList<>();
         this.stats = new ArrayList<>();
         this.visible = visible;
+        this.isLoggingEnabled = loggingEnabled;
 
         if (visible) {
             view = new BattleView(this);
@@ -73,7 +74,7 @@ public class SimpleBattle {
     }
 
     public int playGame(BattleController p1, BattleController p2) {
-        if (visible) {
+        if (isLoggingEnabled) {
             logger1 = new BattleLogger(p1.getClass().toString(), 0);
             logger2 = new BattleLogger(p2.getClass().toString(), 1);
         }
@@ -98,7 +99,7 @@ public class SimpleBattle {
         while (!isGameOver()) {
             update();
             if (--framesUntilLog == 0) {
-                if(visible) {
+                if(isLoggingEnabled) {
                     logger1.log(this);
                     logger2.log(this);
                 }
@@ -106,7 +107,7 @@ public class SimpleBattle {
             }
         }
 
-        if(visible) {
+        if(isLoggingEnabled) {
             logger1.close();
             logger2.close();
         }
@@ -200,7 +201,7 @@ public class SimpleBattle {
 
 
     public SimpleBattle clone() {
-        SimpleBattle state = new SimpleBattle(false);
+        SimpleBattle state = new SimpleBattle(false, true);
         state.objects = copyObjects();
         state.stats = copyStats();
         state.currentTick = currentTick;

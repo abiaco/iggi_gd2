@@ -73,7 +73,7 @@ public class MainMenu extends JFrame {
 
     private static void StartGame(BattleController p1, BattleController p2)
     {
-        SimpleBattle battle = new SimpleBattle(true);
+        SimpleBattle battle = new SimpleBattle(true, true);
 
         frame = battle.windowFrame;
 

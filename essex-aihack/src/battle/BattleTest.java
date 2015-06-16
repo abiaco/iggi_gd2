@@ -14,7 +14,7 @@ public class BattleTest {
 
     public static void main(String[] args) {
 
-        SimpleBattle battle = new SimpleBattle(true);
+        SimpleBattle battle = new SimpleBattle(true, false);
 
         BattleController player1 = new MMMCTS();
         BattleController player2 = new WASDController();
