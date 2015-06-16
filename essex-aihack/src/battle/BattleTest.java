@@ -14,9 +14,9 @@ public class BattleTest {
 
     public static void main(String[] args) {
 
-        SimpleBattle battle = new SimpleBattle(false);
+        SimpleBattle battle = new SimpleBattle(true);
 
-        BattleController player1 = new EmptyController();
+        BattleController player1 = new MMMCTS();
         BattleController player2 = new EmptyController();
         ElapsedCpuTimer ecp = new ElapsedCpuTimer();
         battle.playGame(player1, player2);

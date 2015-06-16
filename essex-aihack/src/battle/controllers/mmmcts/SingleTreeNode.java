@@ -63,11 +63,11 @@ public class SingleTreeNode
         while(remaining > 2*avgTimeTaken && remaining > remainingLimit){
             ElapsedCpuTimer elapsedTimerIteration = new ElapsedCpuTimer();
             SingleTreeNode selected = treePolicy(playerID);
-            System.out.println("Tree policy: " + elapsedTimerIteration.elapsedMillis());
+            //System.out.println("Tree policy: " + elapsedTimerIteration.elapsedMillis());
             double delta = selected.rollOut(playerID);
-            System.out.println("Rollout: " + elapsedTimerIteration.elapsedMillis());
+            //System.out.println("Rollout: " + elapsedTimerIteration.elapsedMillis());
             backUp(selected, delta);
-            System.out.println("Backup: " + elapsedTimerIteration.elapsedMillis());
+            //System.out.println("Backup: " + elapsedTimerIteration.elapsedMillis());
 
             numIters++;
             acumTimeTaken += (elapsedTimerIteration.elapsedMillis()) ;
@@ -222,18 +222,14 @@ public class SingleTreeNode
         return delta;
     }
 
-    public static int SCORE_MOD = 0;
+    public static int SCORE_MOD = 2;
     public static int SCORE_BONUS = 300;
-    public static int MISSILES_LEFT_MOD = 0;
+    public static int MISSILES_LEFT_MOD = 20;
     public static int DISTANCE_MOD = 1;
     public static int GRAVITATE_DISTANCE = 40;
     public static boolean GRAVITATE = false;
 
-    public static int Calls = 0;
-
     public double value(SimpleBattle a_gameState, int playerId) {
-
-        Calls++;
         //double score = OGState.getPoints(playerId);
         double score = 0;
 
@@ -281,8 +277,8 @@ public class SingleTreeNode
         double dist = s1.s.dist(s2.s);
 
         if(mleft > 0) {
-            score -= mused > 0 ? 9 * MISSILES_LEFT_MOD : 0;
-            //score += MISSILES_LEFT_MOD * mleft;
+            //score -= mused > 0 ? 9 * MISSILES_LEFT_MOD : 0;
+            score += MISSILES_LEFT_MOD * mleft;
 
             //int gravitateTowards = 100;
             /*if(GRAVITATE)
