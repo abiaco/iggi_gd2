@@ -67,7 +67,9 @@ public class MMMCTS implements BattleController {
             Action action = actions.get(actionInt).buildAction();
 
             //... and return it.
-            for (int i=0 ; i<MACRO_ACTION_LENGTH ; i++)
+            actionQueue.add(action);
+            action.shoot = false;
+            for (int i=1 ; i<MACRO_ACTION_LENGTH ; i++)
                 actionQueue.add(action);
         }
         Action action = actionQueue.get(0);
