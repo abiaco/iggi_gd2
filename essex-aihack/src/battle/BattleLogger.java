@@ -18,7 +18,7 @@ public class BattleLogger {
 
     BattleLogger(String agent, int playerId) {
         this.playerId = playerId;
-        String baseString = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+        String baseString = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss.SSS").format(new Date());
         baseString = "Data/" + baseString + "-" + agent + "-" + playerId;
 
         try {

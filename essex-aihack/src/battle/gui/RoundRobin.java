@@ -35,14 +35,18 @@ public class RoundRobin {
         ControllersToTest.add(EmptyController.class);
         ControllersToTest.add(RotateAndShoot.class);
 
-        for(Class controllerClass : ControllersToTest)
-        {
-            for(Class otherControllerClass : ControllersToTest)
-            {
-                try {
-                    System.out.println("Fighting: " + controllerClass.getSimpleName() + " vs " + otherControllerClass.getSimpleName());
-                    System.out.println(BattleBetweenControllers((BattleController) controllerClass.newInstance(), (BattleController) otherControllerClass.newInstance()));
-                } catch (Exception exc) {}
+        int maximumRuns = 30;
+
+        for(int i=0;i<maximumRuns;i++) {
+
+            for (Class controllerClass : ControllersToTest) {
+                for (Class otherControllerClass : ControllersToTest) {
+                    try {
+                        System.out.println("Fighting: " + controllerClass.getSimpleName() + " vs " + otherControllerClass.getSimpleName());
+                        System.out.println(BattleBetweenControllers((BattleController) controllerClass.newInstance(), (BattleController) otherControllerClass.newInstance()));
+                    } catch (Exception exc) {
+                    }
+                }
             }
         }
     }
