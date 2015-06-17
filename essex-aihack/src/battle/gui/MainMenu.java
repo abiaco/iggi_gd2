@@ -22,8 +22,7 @@ public class MainMenu extends JFrame {
     private static Object lock = new Object();
     private static JFrame frame = new JFrame();
 
-    public MainMenu()
-    {
+    public MainMenu() {
         initUI();
     }
 
@@ -37,7 +36,7 @@ public class MainMenu extends JFrame {
             }
         });
 
-        JButton startMCTSVSMan = new JButton("MCTS vs Human");
+        JButton startMCTSVSMan = new JButton("MCTS vs Human G1");
 
         startMCTSVSMan.addActionListener(new ActionListener() {
             @Override
@@ -45,35 +44,57 @@ public class MainMenu extends JFrame {
 
                 Thread t = new Thread() {
                     public void run() {
-                         StartGame(new MMMCTS(), new WASDController());
+                         StartGame(new MMMCTS(), new WASDController(), 0);
 
                     }
                 };
                 t.start();
-
-                frame.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent arg0) {
-                        synchronized (lock) {
-                            frame.setVisible(false);
-                            lock.notify();
-                        }
-                    }
-                });
             }
         });
 
-        createLayout(startMCTSVSMan,quitButton);
+        JButton startMCTSVSMan2 = new JButton("MCTS vs Human G2");
+
+        startMCTSVSMan2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Thread t = new Thread() {
+                    public void run() {
+                        StartGame(new MMMCTS(), new WASDController(), 1);
+
+                    }
+                };
+                t.start();
+            }
+        });
+
+        JButton startMCTSVSMan3 = new JButton("MCTS vs Human G3");
+
+        startMCTSVSMan3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Thread t = new Thread() {
+                    public void run() {
+                        StartGame(new MMMCTS(), new WASDController(), 2);
+
+                    }
+                };
+                t.start();
+            }
+        });
+
+        createLayout(startMCTSVSMan,startMCTSVSMan2,startMCTSVSMan3,quitButton);
 
         setTitle("Simple example");
-        setSize(300, 200);
+        setSize(400, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
-    private static void StartGame(BattleController p1, BattleController p2)
+    private static void StartGame(BattleController p1, BattleController p2, int GameMode)
     {
-        SimpleBattle battle = new SimpleBattle(true, true);
+        SimpleBattle battle = new SimpleBattle(true, true, GameMode);
 
         frame = battle.windowFrame;
 

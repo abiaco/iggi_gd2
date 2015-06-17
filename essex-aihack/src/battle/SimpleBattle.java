@@ -27,7 +27,7 @@ public class SimpleBattle {
     // each player
     static int nMissiles = 100;
     static int nTicks = 1000;
-    static int pointsPerKill = 1000;
+    static int pointsPerKill = 100;
     static int pointsPerAsteroidHit = 20;
     static int releaseVelocity = 5;
 
@@ -35,8 +35,9 @@ public class SimpleBattle {
 
     boolean visible = true;
 
-    static int nAsteroids = 9;
-    static int nPickups = 3;
+    public static int nAsteroids = 9;
+    public static int nPickups = 3;
+    public static int nSplits = 3;
 
     ArrayList<BattleController> controllers;
 
@@ -53,11 +54,13 @@ public class SimpleBattle {
 
     boolean isLoggingEnabled;
 
+    int gameType;
+
     public SimpleBattle() {
-        this(true, false);
+        this(true, false, 0);
     }
 
-    public SimpleBattle(boolean visible, boolean loggingEnabled) {
+    public SimpleBattle(boolean visible, boolean loggingEnabled, int gameType) {
         this.objects = new ArrayList<>();
         this.stats = new ArrayList<>();
         this.visible = visible;
@@ -66,6 +69,28 @@ public class SimpleBattle {
         if (visible) {
             view = new BattleView(this);
             windowFrame = new JEasyFrame(view, "battle");
+        }
+
+        this.gameType = gameType;
+        if(gameType == 0)
+        {
+            nAsteroids = 9;
+            nPickups = 3;
+            nSplits = 3;
+        }
+
+        if(gameType == 1)
+        {
+            nAsteroids = 9;
+            nPickups = 3;
+            nSplits = 0;
+        }
+
+        if(gameType == 2)
+        {
+            nAsteroids = 0;
+            nPickups = 6;
+            nSplits = 0;
         }
     }
 
@@ -201,7 +226,7 @@ public class SimpleBattle {
 
 
     public SimpleBattle clone() {
-        SimpleBattle state = new SimpleBattle(false, true);
+        SimpleBattle state = new SimpleBattle(false, true, gameType);
         state.objects = copyObjects();
         state.stats = copyStats();
         state.currentTick = currentTick;

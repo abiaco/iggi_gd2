@@ -23,7 +23,7 @@ public class MMMCTS implements BattleController {
     private ArrayList<Action> actionQueue;
 
     public static int MACRO_ACTION_LENGTH = 3;
-    public static int TIMETOTHINK = 50;
+    public static int TIMETOTHINK = 40;
 
     /**
      * Random generator for the agent.

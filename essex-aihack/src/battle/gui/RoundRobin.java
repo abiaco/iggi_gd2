@@ -8,6 +8,7 @@ import battle.controllers.mmmcts.MMMCTS;
 import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
 import battle.controllers.mmmcts2.MMMCTS2;
 
+import javax.naming.ldap.Control;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,9 @@ public class RoundRobin {
 
     public static double BattleBetweenControllers(BattleController p1, BattleController p2)
     {
-        SimpleBattle battle = new SimpleBattle(false, true);
+        int GameMode = 0; //0,1,2
+
+        SimpleBattle battle = new SimpleBattle(false, true, GameMode);
 
         ElapsedCpuTimer ecp = new ElapsedCpuTimer();
 
@@ -38,9 +41,12 @@ public class RoundRobin {
         int maximumRuns = 30;
 
         for(int i=0;i<maximumRuns;i++) {
-
-            for (Class controllerClass : ControllersToTest) {
-                for (Class otherControllerClass : ControllersToTest) {
+            for(int c1 = 0; c1 < ControllersToTest.size(); c1++)
+            {
+                for(int c2 = c1+1; c2 < ControllersToTest.size(); c2++)
+                {
+                    Class controllerClass = ControllersToTest.get(c1);
+                    Class otherControllerClass = ControllersToTest.get(c2);
                     try {
                         System.out.println("Fighting: " + controllerClass.getSimpleName() + " vs " + otherControllerClass.getSimpleName());
                         System.out.println(BattleBetweenControllers((BattleController) controllerClass.newInstance(), (BattleController) otherControllerClass.newInstance()));

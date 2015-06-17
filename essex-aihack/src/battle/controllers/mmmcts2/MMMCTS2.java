@@ -18,12 +18,12 @@ import java.util.Random;
 public class MMMCTS2 implements BattleController {
 
     public static int NUM_ACTIONS;
-    public static int ROLLOUT_DEPTH = 26;
-    public static double K = Math.sqrt(3);
+    public static int ROLLOUT_DEPTH = 16;
+    public static double K = Math.sqrt(2);
     public static ArrayList<MacroAction> actions;
     private ArrayList<Action> actionQueue;
 
-    public static int MACRO_ACTION_LENGTH = 5;
+    public static int MACRO_ACTION_LENGTH = 3;
     public static int TIMETOTHINK = 20;
 
     /**
