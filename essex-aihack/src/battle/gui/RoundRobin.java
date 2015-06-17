@@ -16,9 +16,8 @@ import java.util.ArrayList;
  */
 public class RoundRobin {
 
-    public static double BattleBetweenControllers(BattleController p1, BattleController p2)
+    public static double BattleBetweenControllers(BattleController p1, BattleController p2, int GameMode)
     {
-        int GameMode = 0; //0,1,2
 
         SimpleBattle battle = new SimpleBattle(false, true, GameMode);
 
@@ -49,7 +48,7 @@ public class RoundRobin {
                     Class otherControllerClass = ControllersToTest.get(c2);
                     try {
                         System.out.println("Fighting: " + controllerClass.getSimpleName() + " vs " + otherControllerClass.getSimpleName());
-                        System.out.println(BattleBetweenControllers((BattleController) controllerClass.newInstance(), (BattleController) otherControllerClass.newInstance()));
+                        System.out.println(BattleBetweenControllers((BattleController) controllerClass.newInstance(), (BattleController) otherControllerClass.newInstance(), Integer.valueOf(args[0])));
                     } catch (Exception exc) {
                     }
                 }
