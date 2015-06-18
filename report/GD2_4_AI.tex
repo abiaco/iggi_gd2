@@ -7,7 +7,7 @@ In order to try to confirm that the game variants had the intended effects on ga
 For the purpose of testing the different variations of the game, 4 agents were used:
 \begin{itemize}
 	\item EmptyController, an agent that performs no actions
-	\item RotateAndShoot, an agent that continually turns in a single directlion while shooting
+	\item RotateAndShoot, an agent that continually turns in a single direction while shooting
 	\item MMMCTS, a version of Monte Carlo Tree Search using hand-crafted heuristics that is given 40ms to select an action
 	\item MMMCTS2, which is identical to MCTS but with a shorter 20ms computational budget
 \end{itemize}
@@ -20,7 +20,7 @@ These agents were made to compete in a round-robin tournament for all three game
 
 \subsection{Results}
 
-Looking at the performance of the agents, the results are remarkably similar to our expectations. The EmptyController agent always performed the worst, managing the occassional win against agents that were unlucky in hitting many asteroids, and therefore ending with a negative score. The RotateAndShoot agent performed slightly better, more often than not beating the EmptyController agent, but still losing to the MCTS agents. The MCTS agents were dominant compared to the non-MCTS agents, and the one given a larger computational budget ended up usually outperforming the one with the tighter budget.
+Looking at the performance of the agents, the results are remarkably similar to our expectations. The EmptyController agent always performed the worst, managing the occasional win against agents that were unlucky in hitting many asteroids, and therefore ending with a negative score. The RotateAndShoot agent performed slightly better, more often than not beating the EmptyController agent, but still losing to the MCTS agents. The MCTS agents were dominant compared to the non-MCTS agents, and the one given a larger computational budget ended up usually outperforming the one with the tighter budget.
 
 Looking at the graphs of score-versus-time for each game mode, we can see that the first game variant (including simple asteroids) resulted in the simpler agents ending with a slightly negative score, with this effect being significantly stronger in the second game variant (featuring splitting asteroids). This is inkeeping with what we expected, although the effect is slightly smaller than we had hoped.
 
@@ -28,7 +28,7 @@ Comparison of the average velocity for the MCTS agents for each of the game vari
 
 \begin{figure}
 	\caption{AI results over the game without asteroids}
-	\begin{tabular}{x{6.85em} | x{4.2em} x{4.2em} x{3.1em} x{3.1em}}
+	\begin{tabular}{x{7.1em} | x{4.2em} x{4.1em} x{3.1em} x{3.1em}}
 		&
 			Empty Controller &
 			Rotate and Shoot &
@@ -55,11 +55,9 @@ Comparison of the average velocity for the MCTS agents for each of the game vari
 			70\% &
 			-\\
 	\end{tabular}
-\end{figure}
-
-\begin{figure}
+	\vspace{1em}
 	\caption{AI results over the game with simple asteroids}
-	\begin{tabular}{x{6.85em} | x{4.2em} x{4.2em} x{3.1em} x{3.1em}}
+	\begin{tabular}{x{7.1em} | x{4.2em} x{4.1em} x{3.1em} x{3.1em}}
 		&
 			Empty Controller &
 			Rotate and Shoot &
@@ -86,11 +84,9 @@ Comparison of the average velocity for the MCTS agents for each of the game vari
 			44\% &
 			-\\
 	\end{tabular}
-\end{figure}
-
-\begin{figure}
+	\vspace{1em}
 	\caption{AI results over the game with splitting asteroids}
-	\begin{tabular}{x{6.85em} | x{4.2em} x{4.2em} x{3.1em} x{3.1em}}
+	\begin{tabular}{x{7.1em} | x{4.2em} x{4.1em} x{3.1em} x{3.1em}}
 		&
 			Empty Controller &
 			Rotate and Shoot &
