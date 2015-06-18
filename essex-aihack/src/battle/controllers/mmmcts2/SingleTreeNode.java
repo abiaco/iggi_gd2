@@ -1,13 +1,9 @@
-package battle.controllers.mmmcts;
+package battle.controllers.mmmcts2;
 
 import asteroids.Action;
-import asteroids.GameObject;
-import battle.NeuroShip;
 import battle.SimpleBattle;
-import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
-import battle.controllers.mmmcts.tools.Utils;
-import math.Vector2d;
-import pickups.Pickup;
+import battle.controllers.mmmcts2.tools.ElapsedCpuTimer;
+import battle.controllers.mmmcts2.tools.Utils;
 
 import java.util.Random;
 
@@ -40,7 +36,7 @@ public class SingleTreeNode
 
         this.parent = parent;
         this.m_rnd = rnd;
-        children = new SingleTreeNode[MMMCTS.NUM_ACTIONS];
+        children = new SingleTreeNode[MMMCTS2.NUM_ACTIONS];
         totValue = 0.0;
         if(parent != null)
             m_depth = parent.m_depth+1;
@@ -83,7 +79,7 @@ public class SingleTreeNode
 
         SingleTreeNode cur = this;
 
-        while (!cur.state.isGameOver() && cur.m_depth < MMMCTS.ROLLOUT_DEPTH)
+        while (!cur.state.isGameOver() && cur.m_depth < MMMCTS2.ROLLOUT_DEPTH)
         {
             if (cur.notFullyExpanded()) {
                 return cur.expand(playerId);
@@ -113,8 +109,8 @@ public class SingleTreeNode
         }
 
         SimpleBattle nextState = state.clone();
-        Action bestActionA = MMMCTS.actions.get(bestAction).buildAction();
-        for(int i=0;i<MMMCTS.MACRO_ACTION_LENGTH;i++) {
+        Action bestActionA = MMMCTS2.actions.get(bestAction).buildAction();
+        for(int i=0;i< MMMCTS2.MACRO_ACTION_LENGTH;i++) {
             if (playerId == 0) {
                 nextState.update(bestActionA, DEFAULTACTION);
             } else {
@@ -145,7 +141,7 @@ public class SingleTreeNode
             childValue = Utils.normalise(childValue, bounds[0], bounds[1]);
 
             double uctValue = childValue +
-                    MMMCTS.K * Math.sqrt(Math.log(this.nVisits + 1) / (child.nVisits + this.epsilon));
+                    MMMCTS2.K * Math.sqrt(Math.log(this.nVisits + 1) / (child.nVisits + this.epsilon));
 
             // small sampleRandom numbers: break ties in unexpanded nodes
             uctValue = Utils.noise(uctValue, this.epsilon, this.m_rnd.nextDouble());     //break ties randomly
@@ -209,9 +205,9 @@ public class SingleTreeNode
 
         while (!finishRollout(rollerState,thisDepth)) {
 
-            int action = m_rnd.nextInt(MMMCTS.NUM_ACTIONS);
-            Action bestActionA = MMMCTS.actions.get(action).buildAction();
-            for(int i=0;i<MMMCTS.MACRO_ACTION_LENGTH;i++) {
+            int action = m_rnd.nextInt(MMMCTS2.NUM_ACTIONS);
+            Action bestActionA = MMMCTS2.actions.get(action).buildAction();
+            for(int i=0;i< MMMCTS2.MACRO_ACTION_LENGTH;i++) {
                 if (playerId == 0) {
                     rollerState.update(bestActionA, DEFAULTACTION);
                 } else {
@@ -319,7 +315,7 @@ public class SingleTreeNode
 
     public boolean finishRollout(SimpleBattle rollerState, int depth)
     {
-        if(depth >= MMMCTS.ROLLOUT_DEPTH)      //rollout end condition.
+        if(depth >= MMMCTS2.ROLLOUT_DEPTH)      //rollout end condition.
             return true;
 
         if(rollerState.isGameOver())               //end of game

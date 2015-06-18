@@ -98,7 +98,7 @@ public class Asteroid extends GameObject {
             // score += asteroidScore;
             if (index > 0) {
                 // add some new ones at this position
-                for (int i=0; i<nSplits; i++) {
+                for (int i=0; i<SimpleBattle.nSplits; i++) {
 
                     Vector2d v1 = new Vector2d(v,true);
                     v1.add(rand.nextGaussian(), rand.nextGaussian());

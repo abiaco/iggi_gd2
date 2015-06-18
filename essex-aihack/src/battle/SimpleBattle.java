@@ -6,8 +6,6 @@ import pickups.Pickup;
 import utilities.JEasyFrame;
 
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -29,7 +27,7 @@ public class SimpleBattle {
     // each player
     static int nMissiles = 100;
     static int nTicks = 1000;
-    static int pointsPerKill = 1000;
+    static int pointsPerKill = 100;
     static int pointsPerAsteroidHit = 20;
     static int releaseVelocity = 5;
 
@@ -37,8 +35,9 @@ public class SimpleBattle {
 
     boolean visible = true;
 
-    static int nAsteroids = 9;
-    static int nPickups = 3;
+    public static int nAsteroids = 9;
+    public static int nPickups = 3;
+    public static int nSplits = 3;
 
     ArrayList<BattleController> controllers;
 
@@ -53,18 +52,45 @@ public class SimpleBattle {
 
     public JEasyFrame windowFrame;
 
+    boolean isLoggingEnabled;
+
+    int gameType;
+
     public SimpleBattle() {
-        this(true);
+        this(true, false, 0);
     }
 
-    public SimpleBattle(boolean visible) {
+    public SimpleBattle(boolean visible, boolean loggingEnabled, int gameType) {
         this.objects = new ArrayList<>();
         this.stats = new ArrayList<>();
         this.visible = visible;
+        this.isLoggingEnabled = loggingEnabled;
 
         if (visible) {
             view = new BattleView(this);
             windowFrame = new JEasyFrame(view, "battle");
+        }
+
+        this.gameType = gameType;
+        if(gameType == 0)
+        {
+            nAsteroids = 9;
+            nPickups = 3;
+            nSplits = 3;
+        }
+
+        if(gameType == 1)
+        {
+            nAsteroids = 9;
+            nPickups = 3;
+            nSplits = 0;
+        }
+
+        if(gameType == 2)
+        {
+            nAsteroids = 0;
+            nPickups = 6;
+            nSplits = 0;
         }
     }
 
@@ -73,7 +99,7 @@ public class SimpleBattle {
     }
 
     public int playGame(BattleController p1, BattleController p2) {
-        if (visible) {
+        if (isLoggingEnabled) {
             logger1 = new BattleLogger(p1.getClass().toString(), 0);
             logger2 = new BattleLogger(p2.getClass().toString(), 1);
         }
@@ -98,7 +124,7 @@ public class SimpleBattle {
         while (!isGameOver()) {
             update();
             if (--framesUntilLog == 0) {
-                if(visible) {
+                if(isLoggingEnabled) {
                     logger1.log(this);
                     logger2.log(this);
                 }
@@ -106,7 +132,7 @@ public class SimpleBattle {
             }
         }
 
-        if(visible) {
+        if(isLoggingEnabled) {
             logger1.close();
             logger2.close();
         }
@@ -200,7 +226,7 @@ public class SimpleBattle {
 
 
     public SimpleBattle clone() {
-        SimpleBattle state = new SimpleBattle(false);
+        SimpleBattle state = new SimpleBattle(false, true, gameType);
         state.objects = copyObjects();
         state.stats = copyStats();
         state.currentTick = currentTick;

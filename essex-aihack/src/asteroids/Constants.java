@@ -37,7 +37,7 @@ public interface Constants {
     int missileTTL = 100;
 
     // how many smaller asteroids an asteroid splits into
-    int nSplits = 3;
+
 
     int clockwise = 1;
     int antiClockwise = -1;

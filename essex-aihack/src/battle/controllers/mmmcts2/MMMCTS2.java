@@ -1,11 +1,12 @@
-package battle.controllers.mmmcts;
+package battle.controllers.mmmcts2;
 
 import asteroids.Action;
 import battle.BattleController;
 import battle.SimpleBattle;
-import battle.controllers.mmmcts.tools.ElapsedCpuTimer;
+import battle.controllers.mmmcts2.tools.ElapsedCpuTimer;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +15,7 @@ import java.util.*;
  * Time: 21:45
  * This is a Java port from Tom Schaul's VGDL - https://github.com/schaul/py-vgdl
  */
-public class MMMCTS implements BattleController {
+public class MMMCTS2 implements BattleController {
 
     public static int NUM_ACTIONS;
     public static int ROLLOUT_DEPTH = 16;
@@ -23,14 +24,14 @@ public class MMMCTS implements BattleController {
     private ArrayList<Action> actionQueue;
 
     public static int MACRO_ACTION_LENGTH = 3;
-    public static int TIMETOTHINK = 40;
+    public static int TIMETOTHINK = 20;
 
     /**
      * Random generator for the agent.
      */
     private SingleMCTSPlayer mctsPlayer;
 
-    public MMMCTS()
+    public MMMCTS2()
     {
         actions = new ArrayList<MacroAction>();
         actionQueue = new ArrayList<>();
