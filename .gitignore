@@ -49,5 +49,9 @@ crashlytics-build.properties
 # Git stuff
 *.log
 *.pdf
-*aux
+*.aux
 *.gz
+*-blx.bib
+*.bbl
+*.blg
+*.run.xml
