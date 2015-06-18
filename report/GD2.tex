@@ -1,15 +1,15 @@
 \documentclass[9pt]{IEEEtran}
 
 \usepackage{graphicx}
-\usepackage{caption}
 \usepackage{subcaption}
 \usepackage{pdfpages}
-\usepackage[noadjust]{cite}
-
 
 \title{AI-guided game design}
 \author{Matthew Bedder, Andrei Iacob, Athanasios Kokkinakis, Mihail Morosan}
 	
+\usepackage[backend=bibtex, style=ieee]{biblatex}
+\addbibresource{GD2_bib.bib}
+
 \begin{document}
 \maketitle
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -18,7 +18,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Existing work}
 \input{GD2_2_Existing}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \section{Chosen domain}
 \input{GD2_3_Domain}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,7 +31,6 @@
 \section{Discussion}
 \input{GD2_6_Discussion}
 
-\bibliographystyle{IEEEtran}
-\bibliography{GD2_bib}
+\printbibliography[heading=bibnumbered]
 
 \end{document}
