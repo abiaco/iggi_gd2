@@ -45,3 +45,9 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 *.csv
+
+# Git stuff
+*.log
+*.pdf
+*aux
+*.gz
