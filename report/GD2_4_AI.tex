@@ -1,15 +1,15 @@
 \subsection{Motivation}
 
-In order to try to confirm that the game variants generated had the intended effects on gameplay, we initially generated AI agents to play the games. We would then log the score, velocity, and missile count of each of the agents over the course of multiple runs, and use these results to try to try to quantify the effects of the variations in the game.
+In order to try to confirm that the game variants had the intended effects on gameplay, we initially generated AI agents to play the games. We would then log the score, velocity, and missile count of each of the agents over the course of multiple runs, and use these results to try to try to quantify the effects of the variations on gameplay.
 
 \subsection{Methodology}
 
 For the purpose of testing the different variations of the game, 4 agents were used:
 \begin{itemize}
 	\item EmptyController, an agent that performs no actions
-	\item RotateAndShoot, an agent that continually turns in a single directly while shooting
+	\item RotateAndShoot, an agent that continually turns in a single directlion while shooting
 	\item MMMCTS, a version of Monte Carlo Tree Search using hand-crafted heuristics that is given 40ms to select an action
-	\item MMMCTS2, which is identical to MCTS but with a shorter 20ms budget
+	\item MMMCTS2, which is identical to MCTS but with a shorter 20ms computational budget
 \end{itemize}
 
 Agents of different complexity were used in order to estimate the difference between the results of skilled versus unskilled players. For this, we consider EmptyController to represent the weakest of players who do not react to what is on the screen. By comparison, we would expect the RotateAndShoot agent to represent a slightly more skilled player who attempts to shoot the enemy ship, but has little strategy or skill. Finally, we would employ the MCTS-based agents to represent skilled players that would do whatever they could to win the game, always planning ahead a short amount into the future. Between the two, we would expect the MCTS agent with a larger computational budget to perform better, as the additional time given to make decisions would allow the agent to build a larger tree of known states, and therefore could plan further into the future.
@@ -27,12 +27,12 @@ Looking at the graphs of score-versus-time for each game mode, we can see that t
 Comparison of the average velocity for the MCTS agents for each of the game variations suggests that the two variants including asteroids resulted in the agents moving at a higher average speed. This is as we had expected, and could suggest that in this respect the inclusion of asteroids had the desired impact.
 
 \begin{figure}
-	\caption{AI results over the game without}
-	\begin{tabular}{p{7.5em} | p{4.5em} p{4.5em} p{4.5em} p{4.5em}}
+	\caption{AI results over the game without asteroids}
+	\begin{tabular}{x{6.85em} | x{4.2em} x{4.2em} x{3.1em} x{3.1em}}
 		&
 			Empty Controller &
 			Rotate and Shoot &
-			MCTS (20ns) &
+			MCTS (20ms) &
 			MCTS (40ms) \\ \hline
 		Empty Controller &
 			-&
@@ -40,16 +40,16 @@ Comparison of the average velocity for the MCTS agents for each of the game vari
 			3\% &
 			0\% \\
 		Rotate and Shoot &
-			1000\% &
+			100\% &
 			-&
 			3\% &
 			3\% \\ 
-		MCTS (20ns) &
+		MCTS (20ms) &
 			97\% &
 			97\% &
 			-&
 			30\% \\
-		MCTS (40ns) &
+		MCTS (40ms) &
 			100\% &
 			97\% &
 			70\% &
@@ -59,7 +59,7 @@ Comparison of the average velocity for the MCTS agents for each of the game vari
 
 \begin{figure}
 	\caption{AI results over the game with simple asteroids}
-	\begin{tabular}{p{7.5em} | p{4.5em} p{4.5em} p{4.5em} p{4.5em}}
+	\begin{tabular}{x{6.85em} | x{4.2em} x{4.2em} x{3.1em} x{3.1em}}
 		&
 			Empty Controller &
 			Rotate and Shoot &
@@ -90,7 +90,7 @@ Comparison of the average velocity for the MCTS agents for each of the game vari
 
 \begin{figure}
 	\caption{AI results over the game with splitting asteroids}
-	\begin{tabular}{p{7.5em} | p{4.5em} p{4.5em} p{4.5em} p{4.5em}}
+	\begin{tabular}{x{6.85em} | x{4.2em} x{4.2em} x{3.1em} x{3.1em}}
 		&
 			Empty Controller &
 			Rotate and Shoot &
@@ -119,26 +119,26 @@ Comparison of the average velocity for the MCTS agents for each of the game vari
 	\end{tabular}
 \end{figure}
 
-\begin{figure}
+\begin{figure*}
 	\caption{Average metrics for AI players over the game without asteroids}
 	\label{fig:data1}
 	\center
-	\includegraphics[scale=0.25]{resources/score_2.pdf}
-	\includegraphics[scale=0.25]{resources/missiles_2.pdf}
-\end{figure}
+	\includegraphics[scale=0.4]{resources/score_2.pdf}
+	\includegraphics[scale=0.4]{resources/missiles_2.pdf}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
 	\caption{Average metrics for AI players over the game with simple asteroids}
 	\label{fig:data2}
 	\center
-	\includegraphics[scale=0.25]{resources/score_1.pdf}
-	\includegraphics[scale=0.25]{resources/missiles_1.pdf}
-\end{figure}
+	\includegraphics[scale=0.4]{resources/score_1.pdf}
+	\includegraphics[scale=0.4]{resources/missiles_1.pdf}
+\end{figure*}
 
-\begin{figure}
+\begin{figure*}
 	\caption{Average metrics for AI players over the game with splitting asteroids}
 	\label{fig:data3}
 	\center
-	\includegraphics[scale=0.25]{resources/score_0.pdf}
-	\includegraphics[scale=0.25]{resources/missiles_0.pdf}
-\end{figure}
+	\includegraphics[scale=0.4]{resources/score_0.pdf}
+	\includegraphics[scale=0.4]{resources/missiles_0.pdf}
+\end{figure*}
