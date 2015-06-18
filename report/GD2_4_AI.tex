@@ -7,9 +7,9 @@ In order to try to confirm that the game variants generated had the intended eff
 For the purpose of testing the different variations of the game, 4 agents were used: MCTS with 40ms thinking time, MCTS with 20ms thinking time, RotateAndShoot and EmptyAI.
 The assumption we made was that the 40ms MCTS would perform a lot better than the 20ms MCTS and that both would greatly overperform compared to RotateAndShoot and EmptyAI. The MCTS agents were also expected to perform admirably against human players.
 
-During the IGGI Essex GD2 training courses, MCTS was found to be the best technique for this sort of game by far with 66 wins and only 4 losses in a round robin tournament between 7 algorithms. The next best AI managed 56 wins and 14 losses, but employed a lot of knowledge relevant to that simpler variation of Battle Asteroids. As a result of these findings, MCTS was picked as the only AI to challenge the game and the human players.
+During the IGGI Essex GD2 training courses, MCTS was found to be the best technique for this sort of game by far with 66 wins and only 4 losses in a round robin tournament between 7 algorithms playing against each other in a game of Battle Asteroids. The next best AI managed 56 wins and 14 losses, but employed a lot of knowledge relevant to that simpler variation of Battle Asteroids. As a result of these findings, MCTS was picked as the only AI to challenge the game and the human players.
 
-Both MCTS agents make use of a rollout depth of 16 and 3 macro actions. The use of macro actions allows the search space to grow more in a helpful manner, thus finding better moves overall. {Powley, E.J. and Whitehouse, D. and Cowling, P.I.} As mentioned previously, the only difference between them is the halved time to think the second agent has. This should, in theory, result in a worse performing agent, at least compared to the other agent.
+Both MCTS agents make use of a rollout depth of 16 and 3 macro actions. The use of macro actions allows the search space to grow more in a helpful manner, thus finding better moves overall. ({Powley, E.J. and Whitehouse, D. and Cowling, P.I.}) As mentioned previously, the only difference between them is the halved time to think the second agent has. This should, in theory, result in a worse performing agent, at least compared to the other agent.
 
 RotateAndShoot employs a very simple behaviour: it is always rotating in one direction and it is always shooting. During the IGGI Essex GD2 trials, RotateAndShoot failed to beat any of the other AI implementations, but often did score positively regardless of eventual loss. Its inclusion helped demonstrate any clear differences in missile avoidance between the various game types and agents.
 
@@ -23,7 +23,7 @@ The tournament consisted of each agent playing each other agent 30 times. This r
 
 Results of the tournament on the first variation of the game (asteroids that split) show the 40ms MCTS agent behaving best. This is as predicted, as the tree the algorithm can expand is much greater than the one the 20ms MCTS agent can create, thus being able to choose better moves every tick. 
 
-This also proves the game will favour more skillful players to random ones and reward better play. The game is challenging enough that the weaker MCTS agent can still win, just not often enough compared to the one giving more thinking time.
+This also proves the game will favour more skillful players to random ones and reward better play. The game is challenging enough that the weaker MCTS agent can still win, just not often enough compared to the one given more thinking time.
 
 \begin{figure}
 	\caption{AI results over the game without}
